@@ -22,15 +22,13 @@ export const postProducto = async (req: Request, res: Response) => {
 
     try {
 
-        const pro = await Producto.findByPk(body.ART_NOMBREC);
+        const pro = await Producto.findByPk(body.ART_CODIGO);
 
         if (pro) {
             return res.status(403).json({
-                msg: `Código ${body.ART_NOMBREC} ya está asignado a otro producto`
+                msg: `Código ${body.ART_CODIGO} ya está asignado a otro producto`
             });
         }
-
-        body.ART_CODIGO = body.ART_NOMBREC;
 
         const producto = await Producto.create(body);
         await producto.save();

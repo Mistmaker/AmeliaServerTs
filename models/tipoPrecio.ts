@@ -2,8 +2,8 @@ import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
 const TipoPrecio = db.define('tipos_precios', {
-    id_tipre: { type: DataTypes.STRING(1), primaryKey: true, allowNull: false, },
-    tipre_nombre: { type: DataTypes.STRING(20), allowNull: true, defaultValue: null, },
+    TPR_ID: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false, },
+    TPR_NOMBRE: { type: DataTypes.STRING(25), allowNull: false, },
 
 }, {
     timestamps: false,

@@ -22,11 +22,11 @@ export const postTipoCliente = async (req: Request, res: Response) => {
 
     try {
 
-        const grupo = await TipoCliente.findByPk(body.ticli_codigo);
+        const grupo = await TipoCliente.findByPk(body.TCL_CODIGO);
 
         if (grupo) {
             return res.status(403).json({
-                msg: `Código ${body.ticli_codigo} ya está asignado a otro grupo`
+                msg: `Código ${body.TCL_CODIGO} ya está asignado a otro grupo`
             });
         }
 

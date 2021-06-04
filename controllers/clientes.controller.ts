@@ -28,7 +28,7 @@ export const getClientesPorNombre = async (req: Request, res: Response) => {
                     }
                 },
                 {
-                    CLI_CODIGO: {
+                    CLI_RUC: {
                         [Op.like]: '%' + body.nombre + '%'
                     }
                 }
@@ -52,15 +52,15 @@ export const postCliente = async (req: Request, res: Response) => {
 
     try {
 
-        const cli = await Cliente.findByPk(body.CLI_RUCIDE);
+        const cli = await Cliente.findByPk(body.CLI_CODIGO);
 
         if (cli) {
             return res.status(403).json({
-                msg: `Número de identificación ${body.CLI_RUCIDE} ya está asignado a otro cliente`
+                msg: `Número de identificación ${body.CLI_CODIGO} ya está asignado a otro cliente`
             });
         }
 
-        body.CLI_CODIGO = body.CLI_RUCIDE;
+        // body.CLI_CODIGO = body.CLI_RUCIDE;
         // body.CLI_NOMBREC = body.CLI_NOMBRE;
 
         const cliente = await Cliente.create(body);

@@ -22,11 +22,11 @@ export const postTipoPrecio = async (req: Request, res: Response) => {
 
     try {
 
-        const grupo = await TipoPrecio.findByPk(body.GRUP_CODIGO);
+        const grupo = await TipoPrecio.findByPk(body.TPR_ID);
 
         if (grupo) {
             return res.status(403).json({
-                msg: `Código ${body.GRUP_CODIGO} ya está asignado a otro grupo`
+                msg: `Código ${body.TPR_ID} ya está asignado a otro grupo`
             });
         }
 
