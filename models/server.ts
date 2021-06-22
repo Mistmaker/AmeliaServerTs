@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import db from '../db/connection';
 import clientesRoutes from '../routes/clientes.routes';
+import proveedoresRoutes from '../routes/proveedores.routes';
 import productosRoutes from '../routes/productos.routes';
 import grupoProductosRoutes from '../routes/grupoProductos.routes';
 import tipoPreciosRoutes from '../routes/tipoPrecio.routes';
@@ -13,6 +14,7 @@ class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
+        proveedores: "/api/proveedores",
         clientes: "/api/clientes",
         tipoClientes: "/api/tipoClientes",
         productos: "/api/productos",
@@ -42,6 +44,7 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.apiPaths.proveedores, proveedoresRoutes);
         this.app.use(this.apiPaths.clientes, clientesRoutes);
         this.app.use(this.apiPaths.tipoClientes, tipoClientesRoutes);
         this.app.use(this.apiPaths.productos, productosRoutes);
