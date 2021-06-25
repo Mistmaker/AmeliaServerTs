@@ -3,8 +3,16 @@ import { Op } from 'sequelize';
 import Proveedor from '../models/proveedores';
 
 export const getProveedores = async (req: Request, res: Response) => {
-  const suppliers = await Proveedor.findAll({ limit: 100 });
-  res.json(suppliers);
+  try {
+    const suppliers = await Proveedor.findAll({ limit: 100 });
+
+    res.json(suppliers);
+  } catch (error) {
+    res.json({
+      error,
+      msg: 'error',
+    });
+  }
 };
 
 export const getProveedor = async (req: Request, res: Response) => {
@@ -39,6 +47,10 @@ export const getProveedoresByName = async (req: Request, res: Response) => {
 
 export const postProveedores = async (req: Request, res: Response) => {
   const { body } = req;
+  console.log('POST BODY PROVEEDOR', body);
+
+  const fixedBody = { COM_CODIGO: '01', PRO_RUCIDE: body.PRO_CODIGO, ...body };
+
   try {
     const existsSupplier = await Proveedor.findByPk(body.PRO_CODIGO);
     if (existsSupplier) {
@@ -47,7 +59,7 @@ export const postProveedores = async (req: Request, res: Response) => {
       });
     }
 
-    const supplier = await Proveedor.create(body);
+    const supplier = await Proveedor.create(fixedBody);
     await supplier.save();
     res.json(supplier);
   } catch (error) {
@@ -59,50 +71,51 @@ export const postProveedores = async (req: Request, res: Response) => {
 };
 
 export const putProveedores = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { body } = req;
+  const { id } = req.params;
+  const { body } = req;
 
-    try {
-        const supplier = await Proveedor.findByPk(id);
+  console.log('PUT BODY PROVEEDOR', body);
 
-        if (!supplier) {
-            return res.status(404).json({
-                msg: `No existe el proveedor con el id ${id}`
-            });
-        }
+  const fixedBody = { COM_CODIGO: '01', PRO_RUCIDE: body.PRO_CODIGO, ...body };
 
-        // body.CLI_NOMBREC = body.CLI_NOMBRE;
+  try {
+    const supplier = await Proveedor.findByPk(id);
 
-        await supplier.update(body);
-        res.json(supplier);
-    } catch (error) {
-        res.status(500).json({
-            msg: 'Ocurrio un error inesperado, comuniquese con el administrador del sitio',
-            error
-        });
+    if (!supplier) {
+      return res.status(404).json({
+        msg: `No existe el proveedor con el id ${id}`,
+      });
     }
+    await supplier.update(fixedBody);
+    res.json(supplier);
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Ocurrio un error inesperado, comuniquese con el administrador del sitio',
+      error,
+    });
+  }
 };
 
 export const deleteProveedores = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try {
-        const supplier = await Proveedor.findByPk(id);
+  try {
+    const supplier = await Proveedor.findByPk(id);
 
-        if (!supplier) {
-            return res.status(404).json({
-                msg: `No existe el proveedor con el id ${id}`
-            });
-        }
-
-        // body.CLI_NOMBREC = body.CLI_NOMBRE;
-
-        await supplier.destroy();
-        res.json(supplier);
-    } catch (error) {
-        res.status(500).json({
-            msg: 'Ocurrio un error inesperado, comuniquese con el administrador del sitio',
-            error
-        });
+    if (!supplier) {
+      return res.status(404).json({
+        msg: `No existe el proveedor con el id ${id}`,
+      });
     }
+
+    // body.CLI_NOMBREC = body.CLI_NOMBRE;
+
+    await supplier.destroy();
+    res.json(supplier);
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Ocurrio un error inesperado, comuniquese con el administrador del sitio',
+      error,
+    });
+  }
 };

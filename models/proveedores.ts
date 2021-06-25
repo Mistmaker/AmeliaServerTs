@@ -278,12 +278,6 @@ const Proveedor = db.define(
         fields: [{ name: 'PRO_CODIGO' }, { name: 'COM_CODIGO' }],
       },
       {
-        name: 'UK_MAEPROVEEDOR',
-        unique: true,
-        using: 'BTREE',
-        fields: [{ name: 'PRO_RUCIDE' }],
-      },
-      {
         name: 'FK_COM_MAEPROVEEDOR_MAEGRUPO',
         using: 'BTREE',
         fields: [{ name: 'GRU_TIPO' }, { name: 'GRU_CODIGO' }],
