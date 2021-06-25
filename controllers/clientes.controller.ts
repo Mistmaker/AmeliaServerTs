@@ -47,6 +47,18 @@ export const getCliente = async (req: Request, res: Response) => {
     res.json(cliente);
 }
 
+export const getClientePorRuc = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const cliente = await Cliente.findOne({
+        where: {
+            CLI_RUC: id
+        }
+    });
+
+    res.json(cliente);
+}
+
 export const postCliente = async (req: Request, res: Response) => {
     const { body } = req;
 
