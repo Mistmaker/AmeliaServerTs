@@ -28,7 +28,7 @@ export const getClientesPorNombre = async (req: Request, res: Response) => {
                     }
                 },
                 {
-                    CLI_RUC: {
+                    CLI_RUCIDE: {
                         [Op.like]: '%' + body.nombre + '%'
                     }
                 }
@@ -72,7 +72,11 @@ export const postCliente = async (req: Request, res: Response) => {
             });
         }
 
-        // body.CLI_CODIGO = body.CLI_RUCIDE;
+        body.CLI_CODIGO = body.CLI_RUCIDE;
+        body.GRU_CODIGO = '01';
+        body.COM_CODIGO = '01';
+        body.GRU_TIPO = 'CLI';
+        body.CLI_FLAG = 1;
         // body.CLI_NOMBREC = body.CLI_NOMBRE;
 
         const cliente = await Cliente.create(body);
