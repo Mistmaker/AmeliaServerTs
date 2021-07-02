@@ -1,4 +1,6 @@
 import { Request, Response } from "express"
+import { Op } from 'sequelize';
+
 import Producto from "../models/productos";
 
 export const getProductos = async (req: Request, res: Response) => {
@@ -16,6 +18,26 @@ export const getProducto = async (req: Request, res: Response) => {
 
     res.json(producto);
 }
+
+export const getProductosByName = async (req: Request, res: Response) => {
+    const { body } = req;
+  
+    const products = await Producto.findAll({
+      where: {
+        [Op.or]: [
+          {
+            ART_NOMBRE: {
+              [Op.like]: '%' + body.name + '%',
+            },
+          },
+        ],
+      },
+      limit: 5,
+    });
+  
+    res.json(products);
+};
+  
 
 export const postProducto = async (req: Request, res: Response) => {
     const { body } = req;
