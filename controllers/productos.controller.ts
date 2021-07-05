@@ -30,6 +30,10 @@ export const postProducto = async (req: Request, res: Response) => {
             });
         }
 
+        body.COM_CODIGO = '01';
+        body.ART_NOMBREC = body.ART_NOMBRE;
+        body.ART_FLAG = 1;
+
         const producto = await Producto.create(body);
         await producto.save();
         res.json(producto);
