@@ -2,6 +2,8 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import db from '../db/connection';
 import clientesRoutes from '../routes/clientes.routes';
+import proveedoresRoutes from '../routes/proveedores.routes';
+import facturasRoutes from '../routes/facturas.routes';
 import productosRoutes from '../routes/productos.routes';
 import grupoProductosRoutes from '../routes/grupoProductos.routes';
 import tipoPreciosRoutes from '../routes/tipoPrecio.routes';
@@ -13,6 +15,8 @@ class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
+        facturas: "/api/facturas",
+        proveedores: "/api/proveedores",
         clientes: "/api/clientes",
         tipoClientes: "/api/tipoClientes",
         productos: "/api/productos",
@@ -42,6 +46,8 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.apiPaths.facturas, facturasRoutes);
+        this.app.use(this.apiPaths.proveedores, proveedoresRoutes);
         this.app.use(this.apiPaths.clientes, clientesRoutes);
         this.app.use(this.apiPaths.tipoClientes, tipoClientesRoutes);
         this.app.use(this.apiPaths.productos, productosRoutes);
@@ -73,7 +79,7 @@ class Server {
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log('Servidor inicado y corriendo en el puerto', this.port);
+            console.log('Servidor iniciado y corriendo en el puerto', this.port);
         });
     }
 }
