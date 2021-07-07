@@ -1,4 +1,4 @@
-import { Sequelize  } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 const db = new Sequelize('amelia_vacia','soporte', 'soporte', {
     host: '181.199.71.180',

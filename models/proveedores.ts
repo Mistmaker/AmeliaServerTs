@@ -1,4 +1,4 @@
-import { DataTypes, Op } from 'sequelize';
+import { DataTypes, DATE, Op } from 'sequelize';
 import db from '../db/connection';
 
 const Proveedor = db.define(
@@ -17,6 +17,11 @@ const Proveedor = db.define(
       //     model: 'ven_maegrupo',
       //     key: 'GRU_CODIGO',
       //   },
+    },
+    PRO_FECHACREADO: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
     PRO_NOMBREC: {
       type: DataTypes.STRING(200),
@@ -265,6 +270,31 @@ const Proveedor = db.define(
     PRO_PAGOREGFISCAL: {
       type: DataTypes.STRING(2),
       allowNull: true,
+    },
+    PRO_FECINIACTIVIDADES: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    PRO_FECCESACTIVIDADES: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    PRO_FECREIACTIVIDADES: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    PRO_FECACTUALIZACION: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    PRO_CLASECONTRIBUYENTE: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: null,
     },
   },
   {
