@@ -296,6 +296,16 @@ const Proveedor = db.define(
       allowNull: true,
       defaultValue: null,
     },
+    PRO_ESTADO: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      defaultValue: '1',
+    },
+    PRO_GMAPS: {
+      type: DataTypes.STRING(600),
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     timestamps: false,
