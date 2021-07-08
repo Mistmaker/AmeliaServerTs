@@ -4,6 +4,7 @@ import db from '../db/connection';
 import clientesRoutes from '../routes/clientes.routes';
 import proveedoresRoutes from '../routes/proveedores.routes';
 import facturasRoutes from '../routes/facturas.routes';
+import ciudadesRoutes from '../routes/ciudades.routes';
 import productosRoutes from '../routes/productos.routes';
 import grupoProductosRoutes from '../routes/grupoProductos.routes';
 import tipoPreciosRoutes from '../routes/tipoPrecio.routes';
@@ -15,6 +16,7 @@ class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
+        ciudades: "/api/ciudades",
         facturas: "/api/facturas",
         proveedores: "/api/proveedores",
         clientes: "/api/clientes",
@@ -46,6 +48,7 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.apiPaths.ciudades, ciudadesRoutes);
         this.app.use(this.apiPaths.facturas, facturasRoutes);
         this.app.use(this.apiPaths.proveedores, proveedoresRoutes);
         this.app.use(this.apiPaths.clientes, clientesRoutes);

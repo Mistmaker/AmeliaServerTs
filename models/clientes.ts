@@ -88,6 +88,7 @@ const Cliente = db.define('ven_maecliente', {
     PARR_CODIGO: { type: DataTypes.STRING(10), allowNull: true, defaultValue: null, },
     CLI_ESTCIV: { type: DataTypes.STRING(10), allowNull: true, defaultValue: null, },
     CLI_ORGING: { type: DataTypes.STRING(10), allowNull: true, defaultValue: null, },
+    //
     CLI_GMAPS: { type: DataTypes.STRING(600), allowNull: true, defaultValue: null, },
     CLI_ACTIVIDAD: { type: DataTypes.STRING(600), allowNull: true, defaultValue: null, },
     CLI_CLASECONTRIBUYENTE: { type: DataTypes.STRING(100), allowNull: true, defaultValue: null, },
@@ -97,7 +98,11 @@ const Cliente = db.define('ven_maecliente', {
     CLI_FECREIACTIVIDADES: { type: DataTypes.DATE, allowNull: true, defaultValue: null, },
     CLI_FECACTUALIZACION: { type: DataTypes.DATE, allowNull: true, defaultValue: null, },
     CLI_CATMIPYMES: { type: DataTypes.STRING(100), allowNull: true, defaultValue: null, },
-
+    CLI_FECHACREADO: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
 
 }, {
     timestamps: false,
