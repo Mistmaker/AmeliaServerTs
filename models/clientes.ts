@@ -103,7 +103,11 @@ const Cliente = db.define('ven_maecliente', {
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },
-
+    CLI_FECHACONSULTA: { type: DataTypes.DATE, allowNull: true, defaultValue: null, },
+    CLI_BASEIVA: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
+    CLI_BASECERO: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
+    CLI_BASENOBJET: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
+    CLI_CIUDAD: { type: DataTypes.STRING(25), allowNull: true, defaultValue: null, }
 }, {
     timestamps: false,
     freezeTableName: true
