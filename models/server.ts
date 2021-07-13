@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import db from '../db/connection';
+import tipoUnidadesRoutes from '../routes/tipoUnidad.routes';
 import configuracionRoutes from '../routes/configuracion.routes';
 import vendedoresRoutes from '../routes/vendedores.routes';
 import cuentasRoutes from '../routes/cuentasContables.routes';
@@ -19,6 +20,7 @@ class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
+        tipoUnidades: "/api/tipoUnidades",
         configuracion: "/api/configuracion",
         vendedores: "/api/vendedores",
         cuentas: "/api/cuentas",
@@ -54,6 +56,7 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.apiPaths.tipoUnidades, tipoUnidadesRoutes);
         this.app.use(this.apiPaths.configuracion, configuracionRoutes);
         this.app.use(this.apiPaths.vendedores, vendedoresRoutes);
         this.app.use(this.apiPaths.cuentas, cuentasRoutes);
