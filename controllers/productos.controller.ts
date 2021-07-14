@@ -82,6 +82,8 @@ export const postProducto = async (req: Request, res: Response) => {
 export const putProducto = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { body } = req;
+  console.log('body', body);
+
   // instanced the transaction
   const t = await db.transaction();
 
@@ -101,11 +103,15 @@ export const putProducto = async (req: Request, res: Response) => {
       ),
     );
 
-    await producto.update({ body }, { transaction: t });
+    await producto.update(body, { transaction: t });
+
+    await Precio.destroy({
+      where: { ART_CODIGO: body.ART_CODIGO },
+      transaction: t,
+    });
+
     await Precio.bulkCreate(precios, {
       transaction: t,
-      validate: true,
-      updateOnDuplicate: ['ARTPRE_CODIGO', 'ARTPRE_PRECIO'],
     });
     // commit the transaction
     await t.commit();

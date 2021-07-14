@@ -2,6 +2,28 @@ import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import Configuracion from '../models/configuracion';
 
+export const getAllConfigs = async (req: Request, res: Response) => {
+  const configs = await Configuracion.findAll();
+  res.json(configs);
+};
+
+export const postAllConfigs = async (req: Request, res: Response) => {
+  const { body } = req;
+
+  try {
+    await Configuracion.bulkCreate(body.data, {
+      validate: true,
+      updateOnDuplicate: ['codigo'],
+    });
+    res.json({ ok: true });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Ocurrió un error, contáctese con el administrador del sistema',
+      error,
+    });
+  }
+};
+
 export const getClienteCuentaConfig = async (req: Request, res: Response) => {
   const clientConfig = await Configuracion.findByPk('CLI_CUENTA');
 

@@ -5,11 +5,15 @@ import {
   postClienteCuentaConfig,
   postProveedorCuentaConfig,
   getPrecioIvaConfig,
-  postPrecioIvaConfig
+  postPrecioIvaConfig,
+  getAllConfigs,
+  postAllConfigs
 } from '../controllers/configuracion.controller';
 
 const router = Router();
 
+router.get('/', getAllConfigs);
+router.post('/', postAllConfigs);
 router.get('/cliente-cuentas', getClienteCuentaConfig);
 router.post('/cliente-cuentas', postClienteCuentaConfig);
 router.get('/proveedor-cuentas', getProveedorCuentaConfig);
