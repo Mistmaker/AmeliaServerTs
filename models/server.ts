@@ -1,9 +1,14 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import db from '../db/connection';
+import tipoUnidadesRoutes from '../routes/tipoUnidad.routes';
+import configuracionRoutes from '../routes/configuracion.routes';
+import vendedoresRoutes from '../routes/vendedores.routes';
+import cuentasRoutes from '../routes/cuentasContables.routes';
 import clientesRoutes from '../routes/clientes.routes';
 import proveedoresRoutes from '../routes/proveedores.routes';
 import facturasRoutes from '../routes/facturas.routes';
+import ciudadesRoutes from '../routes/ciudades.routes';
 import productosRoutes from '../routes/productos.routes';
 import grupoProductosRoutes from '../routes/grupoProductos.routes';
 import tipoPreciosRoutes from '../routes/tipoPrecio.routes';
@@ -15,6 +20,11 @@ class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
+        tipoUnidades: "/api/tipoUnidades",
+        configuracion: "/api/configuracion",
+        vendedores: "/api/vendedores",
+        cuentas: "/api/cuentas",
+        ciudades: "/api/ciudades",
         facturas: "/api/facturas",
         proveedores: "/api/proveedores",
         clientes: "/api/clientes",
@@ -46,6 +56,11 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.apiPaths.tipoUnidades, tipoUnidadesRoutes);
+        this.app.use(this.apiPaths.configuracion, configuracionRoutes);
+        this.app.use(this.apiPaths.vendedores, vendedoresRoutes);
+        this.app.use(this.apiPaths.cuentas, cuentasRoutes);
+        this.app.use(this.apiPaths.ciudades, ciudadesRoutes);
         this.app.use(this.apiPaths.facturas, facturasRoutes);
         this.app.use(this.apiPaths.proveedores, proveedoresRoutes);
         this.app.use(this.apiPaths.clientes, clientesRoutes);

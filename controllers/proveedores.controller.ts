@@ -63,8 +63,9 @@ export const postProveedores = async (req: Request, res: Response) => {
     await supplier.save();
     res.json(supplier);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
-      msg: 'Ocurrio un error inesperado, comuniquese con el administrador del sitio',
+      msg: 'Ocurrió un error inesperado, comuníquese con el administrador del sitio',
       error,
     });
   }
@@ -76,7 +77,11 @@ export const putProveedores = async (req: Request, res: Response) => {
 
   console.log('PUT BODY PROVEEDOR', body);
 
-  const fixedBody = { COM_CODIGO: '01', PRO_RUCIDE: body.PRO_CODIGO, ...body };
+  const fixedBody = {
+    COM_CODIGO: '01',
+    PRO_RUCIDE: body.PRO_CODIGO,
+    ...body,
+  };
 
   try {
     const supplier = await Proveedor.findByPk(id);
@@ -90,7 +95,7 @@ export const putProveedores = async (req: Request, res: Response) => {
     res.json(supplier);
   } catch (error) {
     res.status(500).json({
-      msg: 'Ocurrio un error inesperado, comuniquese con el administrador del sitio',
+      msg: 'Ocurrió un error inesperado, comuníquese con el administrador del sitio',
       error,
     });
   }

@@ -72,7 +72,7 @@ export const postCliente = async (req: Request, res: Response) => {
             });
         }
 
-        body.CLI_CODIGO = body.CLI_RUCIDE;
+        body.CLI_RUCIDE = body.CLI_CODIGO;
         body.GRU_CODIGO = '01';
         body.COM_CODIGO = '01';
         body.GRU_TIPO = 'CLI';

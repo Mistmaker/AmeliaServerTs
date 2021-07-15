@@ -74,8 +74,16 @@ const Producto = db.define('inv_maearticulo', {
     ART_UNIPORCAJA: {type: DataTypes.FLOAT, allowNull: true, defaultValue: null, }, 
     ART_CODSRIICE: {type: DataTypes.STRING(10), allowNull: true, defaultValue: null, }, 
     ART_CANTIDAD: {type: DataTypes.FLOAT, allowNull: true, defaultValue: 0, }, 
+    ART_FECHACREADO:{
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    ART_CUENTAINVENTARIO: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
+    ART_CUENTACOSTOVENTAS: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
+    ART_CUENTAVENTAS: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
+    ART_CODIGOBARRAS: { type: DataTypes.TEXT, allowNull: true, defaultValue: null, },
     
-
 }, {
     timestamps: false,
     freezeTableName: true
