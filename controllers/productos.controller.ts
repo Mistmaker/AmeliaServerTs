@@ -70,7 +70,7 @@ export const postProducto = async (req: Request, res: Response) => {
     await t.commit();
     res.json(producto);
   } catch (error) {
-    // rollback
+    // rollback the transaction on error
     await t.rollback();
     res.status(500).json({
       msg: 'Ocurrió un error, contáctese con el administrador del sistema',
