@@ -12,19 +12,20 @@ export const getFactura = async (req: Request, res: Response) => {};
 
 export const postFacturaProveedor = async (req: Request, res: Response) => {
   const { body } = req;
-  console.log(body);
+  console.log('body', body);
 
-  // first we verify if the user exists
-  const supplier = await Proveedor.findByPk(body.PRO_CODIGO);
-  if (!supplier) {
-    return res.status(404).json({
-      msg: `No existe el proveedor con el id ${body.PRO_CODIGO}`,
-    });
+  if (!body.isNewSupplier) {
+    // first we verify if the user exists
+    const supplier = await Proveedor.findByPk(body.PRO_CODIGO);
+    if (!supplier) {
+      return res.status(404).json({
+        msg: `No existe el proveedor con el id ${body.PRO_CODIGO}`,
+      });
+    }
   }
 
   // then we verify if invoice number exists
   const invoice = await EncabezadoFactura.findByPk(body.ENCFACPRO_NUMERO);
-
   console.log('factura', invoice);
   if (invoice) {
     return res.status(404).json({
@@ -36,14 +37,18 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
 
   const t = await db.transaction();
   try {
+    if (body.isNewSupplier) {
+      const fixedSupplier = {
+        COM_CODIGO: '01',
+        PRO_RUCIDE: body.supplier.PRO_CODIGO,
+        ...body.supplier,
+      };
+      console.log('supplier', fixedSupplier);
+      await Proveedor.create(fixedSupplier, { transaction: t });
+    }
+
     // format details values
     let details: any[] = body.itemsInvoice;
-    details.map(
-        (item) => {
-            delete item.precios
-            delete item.tributaIva
-        },
-      );
     details.map(
       (item) => (
         (item.ENCFACPRO_NUMERO = body.ENCFACPRO_NUMERO),
