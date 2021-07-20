@@ -85,3 +85,7 @@ ALTER TABLE inv_maearticulo
 
 ALTER TABLE inv_maearticulo
     ADD COLUMN ART_CODIGOBARRAS TEXT;
+
+-- se añadio autoincrement en tabla de inv_enckardex
+-- esto facilita mucho la creación de los datos
+alter table inv_enckardex modify kdx_codigo int(38) auto_increment; 

@@ -50,15 +50,15 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
     // format details values
     let details: any[] = body.itemsInvoice;
     details.map(
-      (item) => (
+      (item,index) => (
         (item.ENCFACPRO_NUMERO = body.ENCFACPRO_NUMERO),
         (item.COM_CODIGO = '01'),
-        (item.DETFACPRO_LINEA = 1)
+        (item.DETFACPRO_LINEA = index+1)
       ),
     );
     console.log('details', details);
 
-    await EncabezadoFactura.create(body, { transaction: t });
+    const invoice = await EncabezadoFactura.create(body, { transaction: t });
 
     await DetalleFactura.bulkCreate(details, {
       validate: true,
@@ -66,9 +66,13 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
     });
     // commit the transaction
     await t.commit();
+    res.status(200).json(invoice);
   } catch (error) {
     // rollback the transaction on error
     await t.rollback();
+
+    console.log('error', error);
+
     res.status(500).json({
       msg: 'Ocurrió un error, contáctese con el administrador del sistema',
       error,
