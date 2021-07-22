@@ -1,4 +1,6 @@
+import { Op } from 'sequelize';
 import { Request, Response } from "express"
+
 import GrupoProducto from "../models/grupoProductos";
 
 export const getGrupoProductos = async (req: Request, res: Response) => {
@@ -17,22 +19,43 @@ export const getGrupoProducto = async (req: Request, res: Response) => {
     res.json(grupo);
 }
 
+
+export const getGrupoProductosByNombre = async (req: Request, res: Response) => {
+    const { body } = req;
+  
+    const grupos = await GrupoProducto.findAll({
+      where: {
+        [Op.or]: [
+          {
+            GRUP_NOMBRE: {
+              [Op.like]: '%' + body.name + '%',
+            },
+          }
+        ],
+      },
+      limit: 100,
+    });
+  
+    res.json(grupos);
+};
+  
+
 export const postGrupoProducto = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
 
-        const grupo = await GrupoProducto.findByPk(body.GRU_CODIGO);
+        const grupo = await GrupoProducto.findByPk(body.GRUP_CODIGO);
 
         if (grupo) {
             return res.status(403).json({
-                msg: `Código ${body.GRU_CODIGO} ya está asignado a otro grupo`
+                msg: `Código ${body.GRUP_CODIGO} ya está asignado a otro grupo`
             });
         }
 
-        const producto = await GrupoProducto.create(body);
-        await producto.save();
-        res.json(producto);
+        const grupoProducto = await GrupoProducto.create(body);
+        await grupoProducto.save();
+        res.json(grupoProducto);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',

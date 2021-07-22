@@ -1,89 +1,120 @@
-import { Request, Response } from "express"
-import TipoCliente from "../models/tipoCliente";
+import { Op } from 'sequelize';
+import { Request, Response } from 'express';
+import TipoCliente from '../models/tipoCliente';
 
 export const getTiposClientes = async (req: Request, res: Response) => {
-
-    const tipos = await TipoCliente.findAll({
-        // limit: 2
-    });
-    res.json(tipos);
-}
+  const tipos = await TipoCliente.findAll();
+  res.json(tipos);
+};
 
 export const getTipoCliente = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const tipo = await TipoCliente.findByPk(id);
+  const tipo = await TipoCliente.findOne({
+    where: {
+      ticli_codigo: id,
+    },
+  });
 
-    res.json(tipo);
-}
+  res.json(tipo);
+};
+
+export const getTipoClientesByNombre = async (req: Request, res: Response) => {
+  const { body } = req;
+
+  const tiposClientes = await TipoCliente.findAll({
+    where: {
+      [Op.or]: [
+        {
+          ticli_nombre: {
+            [Op.like]: '%' + body.name + '%',
+          },
+        },
+      ],
+    },
+    limit: 100,
+  });
+
+  res.json(tiposClientes);
+};
 
 export const postTipoCliente = async (req: Request, res: Response) => {
-    const { body } = req;
+  const { body } = req;
 
-    try {
+  console.log(body);
 
-        const grupo = await TipoCliente.findByPk(body.TCL_CODIGO);
+  try {
+    const tipo = await TipoCliente.findOne({
+      where: {
+        ticli_codigo: body.ticli_codigo,
+      },
+    });
 
-        if (grupo) {
-            return res.status(403).json({
-                msg: `Código ${body.TCL_CODIGO} ya está asignado a otro grupo`
-            });
-        }
-
-        const tipoPrecio = await TipoCliente.create(body);
-        await tipoPrecio.save();
-        res.json(tipoPrecio);
-    } catch (error) {
-        res.status(500).json({
-            msg: 'Ocurrió un error, contáctese con el administrador del sistema',
-            error
-        });
+    if (tipo) {
+      return res.status(403).json({
+        msg: `Código ${body.ticli_codigo} ya está asignado a otro tipo de cliente`,
+      });
     }
 
-}
+    const tipoCliente = await TipoCliente.create(body);
+    await tipoCliente.save();
+    res.json(tipoCliente);
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Ocurrió un error, contáctese con el administrador del sistema',
+      error,
+    });
+  }
+};
 
 export const putTipoCliente = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { body } = req;
+  const { id } = req.params;
+  const { body } = req;
 
-    try {
-        const tipo = await TipoCliente.findByPk(id);
+  try {
+    const tipo = await TipoCliente.findOne({
+      where: {
+        ticli_codigo: id,
+      },
+    });
 
-        if (!tipo) {
-            return res.status(404).json({
-                msg: 'No existe el grupo con el id ' + id
-            });
-        }
-
-        await tipo.update(body);
-        res.json(tipo);
-    } catch (error) {
-        res.status(500).json({
-            msg: 'Ocurrió un error, contáctese con el administrador del sistema',
-            error
-        });
+    if (!tipo) {
+      return res.status(404).json({
+        msg: 'No existe el grupo con el id ' + id,
+      });
     }
 
-}
+    await tipo.update(body);
+    res.json(tipo);
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Ocurrió un error, contáctese con el administrador del sistema',
+      error,
+    });
+  }
+};
 
 export const deleteTipoCliente = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-        const tipo = await TipoCliente.findByPk(id);
+  const { id } = req.params;
+  try {
+    const tipo = await TipoCliente.findOne({
+        where: {
+          ticli_codigo: id,
+        },
+      });;
 
-        if (!tipo) {
-            return res.status(404).json({
-                msg: 'No existe el grupo con el id ' + id
-            });
-        }
-
-        await tipo.destroy();
-        res.json(tipo);
-    } catch (error) {
-        res.status(500).json({
-            msg: 'Ocurrió un error, contáctese con el administrador del sistema',
-            error
-        });
+    if (!tipo) {
+      return res.status(404).json({
+        msg: 'No existe el grupo con el id ' + id,
+      });
     }
 
-}
+    await tipo.destroy();
+    res.json(tipo);
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Ocurrió un error, contáctese con el administrador del sistema',
+      error,
+    });
+  }
+};

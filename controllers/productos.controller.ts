@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import Producto from '../models/productos';
 import Precio from '../models/precios';
 import db from '../db/connection';
+import InventarioKardex from '../models/inventarioKardex';
 
 export const getProductos = async (req: Request, res: Response) => {
   const productos = await Producto.findAll({
@@ -66,12 +67,19 @@ export const postProducto = async (req: Request, res: Response) => {
 
     const producto = await Producto.create(body, { transaction: t });
     await Precio.bulkCreate(precios, { validate: true, transaction: t });
+    await InventarioKardex.create(
+      { art_codigo: body.ART_CODIGO, kdx_cantidad: 0, kdx_costofecha: 0 },
+      { transaction: t },
+    );
     // commit the transaction
     await t.commit();
     res.json(producto);
   } catch (error) {
-    // rollback
+    // rollback the transaction on error
     await t.rollback();
+
+    console.log('error', error);
+    
     res.status(500).json({
       msg: 'Ocurrió un error, contáctese con el administrador del sistema',
       error,

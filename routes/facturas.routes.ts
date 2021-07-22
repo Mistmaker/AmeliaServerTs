@@ -3,7 +3,7 @@ import {
   deleteFactura,
   getFactura,
   getFacturas,
-  postFactura,
+  postFacturaProveedor,
   putFactura,
 } from '../controllers/facturas.controller';
 
@@ -11,7 +11,7 @@ const router = Router();
 
 router.get('/', getFacturas);
 router.get('/:id', getFactura);
-router.post('/', postFactura);
+router.post('/factura-proveedor', postFacturaProveedor);
 router.put('/:id', putFactura);
 router.delete('/:id', deleteFactura);
 

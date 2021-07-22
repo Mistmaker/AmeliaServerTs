@@ -1,4 +1,4 @@
-import { DataTypes, DATE, Op } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
 const Ciudad = db.define(
@@ -7,7 +7,6 @@ const Ciudad = db.define(
     UBIGEO_NOMBRE: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      primaryKey: true,
     },
     UBIGEO_NIVEL: { type: DataTypes.STRING, allowNull: false },
     UBIGEO_CODIGO: { type: DataTypes.STRING(25), allowNull: false },
@@ -19,5 +18,6 @@ const Ciudad = db.define(
     freezeTableName: true,
   },
 );
+Ciudad.removeAttribute('id');
 
 export default Ciudad;
