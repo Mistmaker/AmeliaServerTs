@@ -116,6 +116,12 @@ const Cliente = db.define('ven_maecliente', {
     CLI_CLAVESERCOP: { type: DataTypes.STRING(40), allowNull: true, defaultValue: null, },
     CLI_CLAVEQUIPUX: { type: DataTypes.STRING(40), allowNull: true, defaultValue: null, },
     CLI_CLAVEUAFE: { type: DataTypes.STRING(40), allowNull: true, defaultValue: null, },
+    CLI_REGION: {type: DataTypes.STRING(1), allowNull: true, defaultValue: null, }, 
+    CLI_CEDULA: {type: DataTypes.STRING(20), allowNull: true, defaultValue: null, }, 
+    CLI_REPRESENTANTELEGAL: {type: DataTypes.STRING(200), allowNull: true, defaultValue: null, }, 
+    CLI_CATEGORIARUC: {type: DataTypes.INTEGER, allowNull: true, defaultValue: null, }, 
+    CLI_DIGITO: {type: DataTypes.STRING(11), allowNull: true, defaultValue: null, }, 
+    CLI_VENCE: {type: DataTypes.INTEGER, allowNull: true, defaultValue: null, }, 
 }, {
     timestamps: false,
     freezeTableName: true

@@ -1,12 +1,28 @@
 import { Request, Response } from "express"
-import { Op } from "sequelize";
+import { Op, literal } from "sequelize";
 import Cliente from "../models/clientes";
 import ClienteDatosAdicionales from '../models/clientesDatosAdicionales';
 
 export const getClientes = async (req: Request, res: Response) => {
 
     const clientes = await Cliente.findAll({
-        limit: 100
+        limit: 100,
+        attributes: {
+            include: [
+                [
+                    // Note the wrapping parentheses in the call below!
+                    literal(`(
+                        SELECT GRU_NOMBRE
+                        FROM ven_maegrupo AS ven_maegrupo
+                        WHERE
+                            ven_maegrupo.GRU_TIPO = 'CLI'
+                            AND
+                            ven_maegrupo.GRU_CODIGO = ven_maecliente.GRU_CODIGO
+                    )`),
+                    'GrupoCliente'
+                ]
+            ]
+        }
     });
     res.json(clientes);
 }
@@ -35,7 +51,79 @@ export const getClientesPorNombre = async (req: Request, res: Response) => {
                 }
             ]
         },
+        attributes: {
+            include: [
+                [
+                    // Note the wrapping parentheses in the call below!
+                    literal(`(
+                        SELECT GRU_NOMBRE
+                        FROM ven_maegrupo AS ven_maegrupo
+                        WHERE
+                            ven_maegrupo.GRU_TIPO = 'CLI'
+                            AND
+                            ven_maegrupo.GRU_CODIGO = ven_maecliente.GRU_CODIGO
+                    )`),
+                    'GrupoCliente'
+                ]
+            ]
+        },
         limit: 100
+    });
+    res.json(clientes);
+}
+
+export const getClientesPorVence = async (req: Request, res: Response) => {
+
+    const { body } = req;
+
+    const clientes = await Cliente.findAll({
+        where: {
+            CLI_VENCE: body.vence
+        },
+        attributes: {
+            include: [
+                [
+                    // Note the wrapping parentheses in the call below!
+                    literal(`(
+                        SELECT GRU_NOMBRE
+                        FROM ven_maegrupo AS ven_maegrupo
+                        WHERE
+                            ven_maegrupo.GRU_TIPO = 'CLI'
+                            AND
+                            ven_maegrupo.GRU_CODIGO = ven_maecliente.GRU_CODIGO
+                    )`),
+                    'GrupoCliente'
+                ]
+            ]
+        }
+    });
+    res.json(clientes);
+}
+
+export const getClientesPorGrupo = async (req: Request, res: Response) => {
+
+    const { body } = req;
+
+    const clientes = await Cliente.findAll({
+        where: {
+            GRU_CODIGO: body.gruCodigo
+        },
+        attributes: {
+            include: [
+                [
+                    // Note the wrapping parentheses in the call below!
+                    literal(`(
+                        SELECT GRU_NOMBRE
+                        FROM ven_maegrupo AS ven_maegrupo
+                        WHERE
+                            ven_maegrupo.GRU_TIPO = 'CLI'
+                            AND
+                            ven_maegrupo.GRU_CODIGO = ven_maecliente.GRU_CODIGO
+                    )`),
+                    'GrupoCliente'
+                ]
+            ]
+        }
     });
     res.json(clientes);
 }
