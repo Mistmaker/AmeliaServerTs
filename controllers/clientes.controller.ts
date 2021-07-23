@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { Op } from "sequelize";
 import Cliente from "../models/clientes";
+import ClienteDatosAdicionales from '../models/clientesDatosAdicionales';
 
 export const getClientes = async (req: Request, res: Response) => {
 
@@ -80,6 +81,18 @@ export const postCliente = async (req: Request, res: Response) => {
         // body.CLI_NOMBREC = body.CLI_NOMBRE;
 
         const cliente = await Cliente.create(body);
+
+        if (body.datosAdicionales) {
+            const datosAdicionales = {
+                id: 0,
+                CLI_CODIGO: body.CLI_CODIGO,
+                COM_CODIGO: body.COM_CODIGO,
+                ...body.datosAdicionales[0]
+            }
+            const datos = ClienteDatosAdicionales.create(datosAdicionales);
+            (await datos).save();
+        }
+
         await cliente.save();
         res.json(cliente);
     } catch (error) {
@@ -107,6 +120,32 @@ export const putCliente = async (req: Request, res: Response) => {
         // body.CLI_NOMBREC = body.CLI_NOMBRE;
 
         await cliente.update(body);
+
+        if (body.datosAdicionales) {
+            await ClienteDatosAdicionales.destroy({
+                where: {
+                    [Op.and]: [{
+                        CLI_CODIGO: body.CLI_CODIGO,
+                        COM_CODIGO: body.COM_CODIGO,
+                    }]
+                }
+            });
+
+
+            for (const dato of body.datosAdicionales) {
+                const datosAdicionales = {
+                    id: 0,
+                    CLI_CODIGO: body.CLI_CODIGO,
+                    COM_CODIGO: body.COM_CODIGO,
+                    ...dato
+                }
+                const datos = ClienteDatosAdicionales.create(datosAdicionales);
+                (await datos).save();
+            }
+
+
+        }
+
         res.json(cliente);
     } catch (error) {
         res.status(500).json({

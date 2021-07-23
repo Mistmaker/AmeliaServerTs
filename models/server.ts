@@ -14,6 +14,7 @@ import grupoProductosRoutes from '../routes/grupoProductos.routes';
 import tipoPreciosRoutes from '../routes/tipoPrecio.routes';
 import preciosRoutes from '../routes/precios.routes';
 import tipoClientesRoutes from '../routes/tipoCliente.routes';
+import clienteDatosAdicionalesRoutes from '../routes/clienteDatosAdicionales.routes';
 
 class Server {
 
@@ -33,6 +34,7 @@ class Server {
         grupoProductos: "/api/grupoProductos",
         tipoPrecios: "/api/tipoPrecios",
         precios: "/api/precios",
+        clienteDatosAdicionales: "/api/cliDatAdi",
     }
 
     constructor() {
@@ -69,6 +71,7 @@ class Server {
         this.app.use(this.apiPaths.grupoProductos, grupoProductosRoutes);
         this.app.use(this.apiPaths.tipoPrecios, tipoPreciosRoutes);
         this.app.use(this.apiPaths.precios, preciosRoutes);
+        this.app.use(this.apiPaths.clienteDatosAdicionales, clienteDatosAdicionalesRoutes);
     }
 
     middlewares() {
