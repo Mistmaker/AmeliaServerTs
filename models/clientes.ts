@@ -107,7 +107,12 @@ const Cliente = db.define('ven_maecliente', {
     CLI_BASEIVA: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
     CLI_BASECERO: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
     CLI_BASENOBJET: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
-    CLI_CIUDAD: { type: DataTypes.STRING(25), allowNull: true, defaultValue: null, }
+    CLI_CIUDAD: { type: DataTypes.STRING(25), allowNull: true, defaultValue: null, },
+    CLI_MICROEMPRESA: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+    CLI_CONTRIESPECIAL: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+    CLI_EMPRESAFANTAS: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+    CLI_AGENRETENCION: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+
 }, {
     timestamps: false,
     freezeTableName: true
