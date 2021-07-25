@@ -310,8 +310,11 @@ const Proveedor = db.define(
     PRO_BASEIVA: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
     PRO_BASECERO: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
     PRO_BASENOBJET: { type: DataTypes.STRING(35), allowNull: true, defaultValue: null, },
-    PRO_CIUDAD: { type: DataTypes.STRING(25), allowNull: true, defaultValue: null, }
-
+    PRO_CIUDAD: { type: DataTypes.STRING(25), allowNull: true, defaultValue: null, },
+    PRO_MICROEMPRESA: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+    PRO_CONTRIESPECIAL: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+    PRO_EMPRESAFANTAS: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
+    PRO_AGENRETENCION: {type: DataTypes.STRING(2), allowNull: true, defaultValue: null, }, 
   },
   {
     timestamps: false,

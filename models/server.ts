@@ -17,6 +17,7 @@ import tipoClientesRoutes from '../routes/tipoCliente.routes';
 import clienteDatosAdicionalesRoutes from '../routes/clienteDatosAdicionales.routes';
 import usuariosRoutes from '../routes/usuario.routes';
 import grupoClientesRoutes from '../routes/grupoClientes.routes';
+import tipClientesRoutes from '../routes/tipoClientes.routes';
 
 class Server {
 
@@ -39,6 +40,7 @@ class Server {
         clienteDatosAdicionales: "/api/cliDatAdi",
         usuarios: "/api/usuarios",
         grupoClientes: "/api/grupoClientes",
+        tipClientes: "/api/tipClientes",
     }
 
     constructor() {
@@ -78,6 +80,7 @@ class Server {
         this.app.use(this.apiPaths.clienteDatosAdicionales, clienteDatosAdicionalesRoutes);
         this.app.use(this.apiPaths.usuarios, usuariosRoutes);
         this.app.use(this.apiPaths.grupoClientes, grupoClientesRoutes);
+        this.app.use(this.apiPaths.tipClientes, tipClientesRoutes);
     }
 
     middlewares() {

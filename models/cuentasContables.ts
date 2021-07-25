@@ -1,4 +1,4 @@
-import { DataTypes, DATE, Op } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
 const CuentasContables = db.define(

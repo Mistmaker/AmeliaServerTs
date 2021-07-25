@@ -15,9 +15,9 @@ export const getGrupoClientes = async (req: Request, res: Response) => {
 export const getGrupoCliente = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const tipo = await GrupoCliente.findByPk(id);
+    const grupo = await GrupoCliente.findByPk(id);
 
-    res.json(tipo);
+    res.json(grupo);
 }
 
 export const postGrupoCliente = async (req: Request, res: Response) => {
@@ -25,17 +25,17 @@ export const postGrupoCliente = async (req: Request, res: Response) => {
 
     try {
 
-        const grupo = await GrupoCliente.findByPk(body.TPR_ID);
+        const grupo = await GrupoCliente.findByPk(body.GRU_CODIGO);
 
         if (grupo) {
             return res.status(403).json({
-                msg: `Código ${body.TPR_ID} ya está asignado a otro grupo`
+                msg: `Código ${body.GRU_CODIGO} ya está asignado a otro grupo`
             });
         }
 
-        const tipoPrecio = await GrupoCliente.create(body);
-        await tipoPrecio.save();
-        res.json(tipoPrecio);
+        const grup = await GrupoCliente.create(body);
+        await grup.save();
+        res.json(grup);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
@@ -50,16 +50,16 @@ export const putGrupoCliente = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        const tipo = await GrupoCliente.findByPk(id);
+        const grupo = await GrupoCliente.findByPk(id);
 
-        if (!tipo) {
+        if (!grupo) {
             return res.status(404).json({
                 msg: 'No existe el grupo con el id ' + id
             });
         }
 
-        await tipo.update(body);
-        res.json(tipo);
+        await grupo.update(body);
+        res.json(grupo);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
@@ -72,16 +72,16 @@ export const putGrupoCliente = async (req: Request, res: Response) => {
 export const deleteGrupoCliente = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const tipo = await GrupoCliente.findByPk(id);
+        const grupo = await GrupoCliente.findByPk(id);
 
-        if (!tipo) {
+        if (!grupo) {
             return res.status(404).json({
                 msg: 'No existe el grupo con el id ' + id
             });
         }
 
-        await tipo.destroy();
-        res.json(tipo);
+        await grupo.destroy();
+        res.json(grupo);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',

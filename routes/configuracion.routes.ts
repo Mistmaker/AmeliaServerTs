@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getClienteCuentaConfig,
+  getConfig,
   getProveedorCuentaConfig,
   postClienteCuentaConfig,
   postProveedorCuentaConfig,
@@ -13,6 +14,7 @@ import {
 const router = Router();
 
 router.get('/', getAllConfigs);
+router.get('/:id', getConfig);
 router.post('/', postAllConfigs);
 router.get('/cliente-cuentas', getClienteCuentaConfig);
 router.post('/cliente-cuentas', postClienteCuentaConfig);

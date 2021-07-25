@@ -22,7 +22,10 @@ export const getClientes = async (req: Request, res: Response) => {
                     'GrupoCliente'
                 ]
             ]
-        }
+        },
+        order: [
+            ['CLI_VENCE', 'ASC']
+        ]
     });
     res.json(clientes);
 }
@@ -67,7 +70,10 @@ export const getClientesPorNombre = async (req: Request, res: Response) => {
                 ]
             ]
         },
-        limit: 100
+        limit: 100,
+        order: [
+            ['CLI_VENCE', 'ASC']
+        ]
     });
     res.json(clientes);
 }
@@ -95,7 +101,10 @@ export const getClientesPorVence = async (req: Request, res: Response) => {
                     'GrupoCliente'
                 ]
             ]
-        }
+        },
+        order: [
+            ['CLI_VENCE', 'ASC']
+        ]
     });
     res.json(clientes);
 }

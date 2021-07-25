@@ -89,3 +89,32 @@ ALTER TABLE inv_maearticulo
 -- se añadio autoincrement en tabla de inv_enckardex
 -- esto facilita mucho la creación de los datos
 alter table inv_enckardex modify kdx_codigo int(38) auto_increment; 
+
+--  proveedores
+-- columnas Microempresa, Contribuyente especial, Empresa fantasma y Agente de retencion
+ALTER TABLE com_maeproveedor
+    ADD COLUMN PRO_MICROEMPRESA VARCHAR(2);
+
+ALTER TABLE com_maeproveedor
+    ADD COLUMN PRO_CONTRIESPECIAL VARCHAR(2);
+
+ALTER TABLE com_maeproveedor
+    ADD COLUMN PRO_EMPRESAFANTAS VARCHAR(2);
+
+ALTER TABLE com_maeproveedor
+    ADD COLUMN PRO_AGENRETENCION VARCHAR(2);
+
+
+--  clientes
+-- columnas Microempresa, Contribuyente especial, Empresa fantasma y Agente de retencion
+ALTER TABLE ven_maecliente
+    ADD COLUMN CLI_MICROEMPRESA VARCHAR(80);
+
+ALTER TABLE ven_maecliente
+    ADD COLUMN CLI_CONTRIESPECIAL VARCHAR(2);
+
+ALTER TABLE ven_maecliente
+    ADD COLUMN CLI_EMPRESAFANTAS VARCHAR(2);
+
+ALTER TABLE ven_maecliente
+    ADD COLUMN CLI_AGENRETENCION VARCHAR(2);

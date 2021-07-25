@@ -7,6 +7,14 @@ export const getAllConfigs = async (req: Request, res: Response) => {
   res.json(configs);
 };
 
+export const getConfig = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const conf = await Configuracion.findByPk(id);
+
+  res.json(conf);
+}
+
 export const postAllConfigs = async (req: Request, res: Response) => {
   const { body } = req;
 

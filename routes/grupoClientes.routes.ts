@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { getGrupoClientes } from '../controllers/grupoClientes.controller';
+import { getGrupoClientes, getGrupoCliente, postGrupoCliente, putGrupoCliente, deleteGrupoCliente } from '../controllers/grupoClientes.controller';
 
 const router = Router();
 
 router.get('/', getGrupoClientes);
-// router.get('/:id', getTipoPrecio);
-// router.post('/', postTipoPrecio);
-// router.put('/:id', putTipoPrecio);
-// router.delete('/:id', deleteTipoPrecio);
+router.get('/:id', getGrupoCliente);
+router.post('/', postGrupoCliente);
+router.put('/:id', putGrupoCliente);
+router.delete('/:id', deleteGrupoCliente);
 
 
 
