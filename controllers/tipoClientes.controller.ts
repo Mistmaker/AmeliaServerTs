@@ -12,30 +12,11 @@ export const getTipoCliente = async (req: Request, res: Response) => {
 
   const tipo = await TipoClientes.findOne({
     where: {
-      ticli_codigo: id,
+      TIP_CODIGO: id,
     },
   });
 
   res.json(tipo);
-};
-
-export const getTipoClientesByNombre = async (req: Request, res: Response) => {
-  const { body } = req;
-
-  const tiposClientes = await TipoClientes.findAll({
-    where: {
-      [Op.or]: [
-        {
-          ticli_nombre: {
-            [Op.like]: '%' + body.name + '%',
-          },
-        },
-      ],
-    },
-    limit: 100,
-  });
-
-  res.json(tiposClientes);
 };
 
 export const postTipoCliente = async (req: Request, res: Response) => {
@@ -46,13 +27,13 @@ export const postTipoCliente = async (req: Request, res: Response) => {
   try {
     const tipo = await TipoClientes.findOne({
       where: {
-        ticli_codigo: body.ticli_codigo,
+        TIP_CODIGO: body.TIP_CODIGO,
       },
     });
 
     if (tipo) {
       return res.status(403).json({
-        msg: `Código ${body.ticli_codigo} ya está asignado a otro tipo de cliente`,
+        msg: `Código ${body.TIP_CODIGO} ya está asignado a otro tipo de cliente`,
       });
     }
 
@@ -74,7 +55,7 @@ export const putTipoCliente = async (req: Request, res: Response) => {
   try {
     const tipo = await TipoClientes.findOne({
       where: {
-        ticli_codigo: id,
+        TIP_CODIGO: id,
       },
     });
 
@@ -99,7 +80,7 @@ export const deleteTipoCliente = async (req: Request, res: Response) => {
   try {
     const tipo = await TipoClientes.findOne({
         where: {
-          ticli_codigo: id,
+          TIP_CODIGO: id,
         },
       });;
 

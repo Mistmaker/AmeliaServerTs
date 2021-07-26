@@ -12,9 +12,9 @@ export const getUsuarios = async (req: Request, res: Response) => {
 export const getUsuario = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const tipo = await Usuario.findByPk(id);
+    const usuario = await Usuario.findByPk(id);
 
-    res.json(tipo);
+    res.json(usuario);
 }
 
 export const postUsuario = async (req: Request, res: Response) => {
@@ -22,17 +22,27 @@ export const postUsuario = async (req: Request, res: Response) => {
 
     try {
 
-        const grupo = await Usuario.findByPk(body.TPR_ID);
+        const usuario = await Usuario.findByPk(body.USUIDENTIFICACION);
+        const vendedor = await Usuario.findOne({
+            where: {
+                VEN_CODIGO: body.VEN_CODIGO
+            }
+        })
 
-        if (grupo) {
+        if (usuario) {
             return res.status(403).json({
-                msg: `Código ${body.TPR_ID} ya está asignado a otro grupo`
+                msg: `Nombre de usuario ${body.USUIDENTIFICACION} ya está resgistado`
+            });
+        }
+        if (vendedor) {
+            return res.status(403).json({
+                msg: `Asesor ${body.USUAPELLIDO} ya tiene un usuario asignado`
             });
         }
 
-        const tipoPrecio = await Usuario.create(body);
-        await tipoPrecio.save();
-        res.json(tipoPrecio);
+        const usu = await Usuario.create(body);
+        await usu.save();
+        res.json(usu);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
@@ -47,16 +57,16 @@ export const putUsuario = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        const tipo = await Usuario.findByPk(id);
+        const usuario = await Usuario.findByPk(id);
 
-        if (!tipo) {
+        if (!usuario) {
             return res.status(404).json({
-                msg: 'No existe el grupo con el id ' + id
+                msg: 'No existe el usuario con el id ' + id
             });
         }
 
-        await tipo.update(body);
-        res.json(tipo);
+        await usuario.update(body);
+        res.json(usuario);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
@@ -69,16 +79,16 @@ export const putUsuario = async (req: Request, res: Response) => {
 export const deleteUsuario = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const tipo = await Usuario.findByPk(id);
+        const usuario = await Usuario.findByPk(id);
 
-        if (!tipo) {
+        if (!usuario) {
             return res.status(404).json({
-                msg: 'No existe el grupo con el id ' + id
+                msg: 'No existe el usuario con el id ' + id
             });
         }
 
-        await tipo.destroy();
-        res.json(tipo);
+        await usuario.destroy();
+        res.json(usuario);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',

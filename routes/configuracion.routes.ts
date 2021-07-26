@@ -14,9 +14,9 @@ import {
 const router = Router();
 
 router.get('/', getAllConfigs);
+router.get('/cliente-cuentas', getClienteCuentaConfig);
 router.get('/:id', getConfig);
 router.post('/', postAllConfigs);
-router.get('/cliente-cuentas', getClienteCuentaConfig);
 router.post('/cliente-cuentas', postClienteCuentaConfig);
 router.get('/proveedor-cuentas', getProveedorCuentaConfig);
 router.post('/proveedor-cuentas', postProveedorCuentaConfig);

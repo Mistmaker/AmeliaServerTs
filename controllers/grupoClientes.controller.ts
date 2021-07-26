@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { Op } from "sequelize";
 import GrupoCliente from '../models/grupoClientes';
 
 export const getGrupoClientes = async (req: Request, res: Response) => {
@@ -15,7 +16,14 @@ export const getGrupoClientes = async (req: Request, res: Response) => {
 export const getGrupoCliente = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const grupo = await GrupoCliente.findByPk(id);
+    const grupo = await GrupoCliente.findOne(
+        {
+            where: {
+                GRU_TIPO: 'CLI',
+                GRU_CODIGO: id
+            }
+        }
+    );
 
     res.json(grupo);
 }
@@ -25,7 +33,14 @@ export const postGrupoCliente = async (req: Request, res: Response) => {
 
     try {
 
-        const grupo = await GrupoCliente.findByPk(body.GRU_CODIGO);
+        const grupo = await GrupoCliente.findOne(
+            {
+                where: {
+                    GRU_TIPO: 'CLI',
+                    GRU_CODIGO: body.GRU_CODIGO
+                }
+            }
+        );
 
         if (grupo) {
             return res.status(403).json({
@@ -50,7 +65,14 @@ export const putGrupoCliente = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        const grupo = await GrupoCliente.findByPk(id);
+        const grupo = await GrupoCliente.findOne(
+            {
+                where: {
+                    GRU_TIPO: 'CLI',
+                    GRU_CODIGO: id
+                }
+            }
+        );
 
         if (!grupo) {
             return res.status(404).json({
@@ -72,7 +94,14 @@ export const putGrupoCliente = async (req: Request, res: Response) => {
 export const deleteGrupoCliente = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const grupo = await GrupoCliente.findByPk(id);
+        const grupo = await GrupoCliente.findOne(
+            {
+                where: {
+                    GRU_TIPO: 'CLI',
+                    GRU_CODIGO: id
+                }
+            }
+        );
 
         if (!grupo) {
             return res.status(404).json({
