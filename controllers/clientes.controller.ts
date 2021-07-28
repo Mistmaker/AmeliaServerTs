@@ -179,7 +179,7 @@ export const postCliente = async (req: Request, res: Response) => {
 
         const cliente = await Cliente.create(body);
 
-        if (body.datosAdicionales) {
+        if (body.datosAdicionales.length > 0) {
             const datosAdicionales = {
                 id: 0,
                 CLI_CODIGO: body.CLI_CODIGO,
@@ -218,7 +218,7 @@ export const putCliente = async (req: Request, res: Response) => {
 
         await cliente.update(body);
 
-        if (body.datosAdicionales) {
+        if (body.datosAdicionales.length > 0) {
             await ClienteDatosAdicionales.destroy({
                 where: {
                     [Op.and]: [{
