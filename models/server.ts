@@ -18,6 +18,9 @@ import clienteDatosAdicionalesRoutes from '../routes/clienteDatosAdicionales.rou
 import usuariosRoutes from '../routes/usuario.routes';
 import grupoClientesRoutes from '../routes/grupoClientes.routes';
 import tipClientesRoutes from '../routes/tipoClientes.routes';
+import cliDocsRoutes from '../routes/clientesDocumentos.routes';
+import empresaRoutes from '../routes/empresa.routes';
+import usuarioPerfilesRoutes from '../routes/usuarioPerfiles.routes';
 
 class Server {
 
@@ -41,6 +44,9 @@ class Server {
         usuarios: "/api/usuarios",
         grupoClientes: "/api/grupoClientes",
         tipClientes: "/api/tipClientes",
+        cliDocs: "/api/cliDocs",
+        empresa: "/api/empresa",
+        perfilesUsuario: "/api/usuarioPerfiles",
     }
 
     constructor() {
@@ -81,6 +87,9 @@ class Server {
         this.app.use(this.apiPaths.usuarios, usuariosRoutes);
         this.app.use(this.apiPaths.grupoClientes, grupoClientesRoutes);
         this.app.use(this.apiPaths.tipClientes, tipClientesRoutes);
+        this.app.use(this.apiPaths.cliDocs, cliDocsRoutes);
+        this.app.use(this.apiPaths.empresa, empresaRoutes);
+        this.app.use(this.apiPaths.perfilesUsuario, usuarioPerfilesRoutes);
     }
 
     middlewares() {
@@ -92,7 +101,7 @@ class Server {
             res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
             next();
         });
-        
+
         // Cors
         this.app.use(cors());
 

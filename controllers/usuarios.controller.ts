@@ -9,6 +9,33 @@ export const getUsuarios = async (req: Request, res: Response) => {
     res.json(usuarios);
 }
 
+export const autenticarUsuario = async (req: Request, res: Response) => {
+    const { body } = req;
+
+    try {
+
+        const usuario = await Usuario.findOne({
+            where: {
+                USUIDENTIFICACION: body.USUIDENTIFICACION,
+                USUCLAVE: body.USUCLAVE
+            }
+        });
+
+        if (usuario) {
+            return res.status(200).json(usuario);
+        } else {
+            return res.status(200).json(null);
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Ocurrió un error, contáctese con el administrador del sistema',
+            error
+        });
+    }
+
+}
+
 export const getUsuario = async (req: Request, res: Response) => {
     const { id } = req.params;
 
