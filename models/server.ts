@@ -70,6 +70,8 @@ class Server {
     }
 
     routes() {
+
+        this.app.use(express.static('public'));
         this.app.use(this.apiPaths.tipoUnidades, tipoUnidadesRoutes);
         this.app.use(this.apiPaths.configuracion, configuracionRoutes);
         this.app.use(this.apiPaths.vendedores, vendedoresRoutes);
