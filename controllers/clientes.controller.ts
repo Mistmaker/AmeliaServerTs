@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { Op, literal } from "sequelize";
 import Cliente from "../models/clientes";
 import ClienteDatosAdicionales from '../models/clientesDatosAdicionales';
+import ClientesDocumentos from '../models/clientesDocumentos';
 
 export const getClientes = async (req: Request, res: Response) => {
 
@@ -263,6 +264,14 @@ export const deleteCliente = async (req: Request, res: Response) => {
                 msg: 'No existe el cliente con el id ' + id
             });
         }
+
+        await ClienteDatosAdicionales.destroy({
+            where: { CLI_CODIGO: id }
+        });
+
+        await ClientesDocumentos.destroy({
+            where: { CLI_CODIGO: id }
+        });
 
         await cliente.destroy();
         res.json(cliente);

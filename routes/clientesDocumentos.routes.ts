@@ -5,7 +5,7 @@ import { putUsuario } from '../controllers/usuarios.controller';
 const router = Router();
 
 router.get('/', getDocumentos);
-router.get('/:id', getDocumento);
+router.get('/:id/download', getDocumento);
 router.get('/cliente/:id', getDocumentosPorCliente);
 router.post('/', postDocumento);
 router.put('/:id', putUsuario);

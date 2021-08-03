@@ -1,5 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 import db from '../db/connection';
 import tipoUnidadesRoutes from '../routes/tipoUnidad.routes';
 import configuracionRoutes from '../routes/configuracion.routes';
@@ -96,6 +98,10 @@ class Server {
 
     middlewares() {
 
+        this.app.use(bodyParser.json({ limit: '80mb' }));
+        this.app.use(bodyParser.urlencoded({ limit: '80mb', extended: false }));// Setup a default catch-all route that sends back a welcome message in JSON format.
+
+
         this.app.use((req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -106,6 +112,10 @@ class Server {
 
         // Cors
         this.app.use(cors());
+
+        this.app.use(fileUpload({
+            createParentPath: true
+        }));
 
         // lectura y parseo del body
         this.app.use(express.json());
