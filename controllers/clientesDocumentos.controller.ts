@@ -29,7 +29,7 @@ export const getImagenesPorCliente = async (req: Request, res: Response) => {
         [Op.not]: null,
       }
     },
-    attributes: ['DOC_CODIGO', 'CLI_CODIGO', 'DOC_NOMBRE', 'DOC_DATOS', 'DOC_SIZE', 'DOC_TIPO', 'DOC_MIMETYPE', 'DOC_FECHA', 'DOC_TOTAL', 'DOC_ESTADO']
+    attributes: ['DOC_CODIGO', 'CLI_CODIGO', 'DOC_NOMBRE', 'DOC_SIZE', 'DOC_TIPO', 'DOC_MIMETYPE', 'DOC_FECHA', 'DOC_TOTAL', 'DOC_ESTADO']
   });
 
   if (documentos) {
@@ -39,7 +39,7 @@ export const getImagenesPorCliente = async (req: Request, res: Response) => {
         DOC_CODIGO: doc["DOC_CODIGO"],
         CLI_CODIGO: doc["CLI_CODIGO"],
         DOC_NOMBRE: doc["DOC_NOMBRE"],
-        DOC_DATOS: doc["DOC_DATOS"].toString('base64'),
+        // DOC_DATOS: doc["DOC_DATOS"].toString('base64'),
         DOC_SIZE: doc["DOC_SIZE"],
         DOC_TIPO: doc["DOC_TIPO"],
         DOC_MIMETYPE: doc["DOC_MIMETYPE"],
@@ -71,6 +71,20 @@ export const getDocumento = async (req: Request, res: Response) => {
     console.log(err)
     res.json({ msg: 'Error', detail: err });
   });
+};
+
+export const getImagen = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const documento = await ClientesDocumentos.findByPk(id);
+  if (documento) {
+    let tmpDoc: any = documento;
+    let docs = {
+      DOC_DATOS: tmpDoc["DOC_DATOS"].toString('base64'),
+    }
+    res.json(docs);
+  } else {
+    res.json(documento);
+  }
 };
 
 export const postDocumento = async (req: any, res: Response) => {
@@ -181,7 +195,7 @@ export const postImagen = async (req: any, res: Response) => {
         await documento.save();
         // res.json(documento);
       } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
           msg: 'Ocurrió un error, contáctese con el administrador del sistema',
           error,
         });
@@ -191,7 +205,7 @@ export const postImagen = async (req: any, res: Response) => {
       err: false,
       msg: 'Archivos cargados con éxito'
     }
-    res.status(200).json(resp);
+    return res.status(200).json(resp);
 
   } else {
     const data = {
@@ -209,12 +223,22 @@ export const postImagen = async (req: any, res: Response) => {
     //Valid Size
     if ((data.DOC_SIZE) / (1024) > 15) res.status(400).send('The file size must be less than 15 mb')
 
+    req.files.current.mv(`${__dirname}/public/${req.body.filename}.jpg`, { mkdirp: true }, (err: any) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      res.json({ file: `public/${req.body.filename}.jpg` });
+      console.log(res.json);
+    });
+
     try {
       const documento = await ClientesDocumentos.create(data);
       await documento.save();
       res.json(documento);
     } catch (error) {
-      res.status(500).json({
+      console.log(error);
+      return res.status(500).json({
         msg: 'Ocurrió un error, contáctese con el administrador del sistema',
         error,
       });

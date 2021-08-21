@@ -23,6 +23,10 @@ import tipClientesRoutes from '../routes/tipoClientes.routes';
 import cliDocsRoutes from '../routes/clientesDocumentos.routes';
 import empresaRoutes from '../routes/empresa.routes';
 import usuarioPerfilesRoutes from '../routes/usuarioPerfiles.routes';
+import actividadesRoutes from '../routes/actividades.routes';
+import agendaActividadRoutes from '../routes/agendaActividad.routes';
+import comentariosAgendaRoutes from '../routes/comentariosAgenda.routes';
+import entidadesRoutes from '../routes/entidad.routes';
 
 class Server {
 
@@ -49,11 +53,15 @@ class Server {
         cliDocs: "/api/cliDocs",
         empresa: "/api/empresa",
         perfilesUsuario: "/api/usuarioPerfiles",
+        actividades: "/api/actividades",
+        agendaActividad: "/api/agendaActividad",
+        comentariosAgenda: "/api/comentariosAgenda",
+        entidades: "/api/entidades",
     }
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || '8000';
+        this.port = process.env.PORT || '9000';
 
         // Métodos iniciales
         this.dbConnection();
@@ -94,6 +102,10 @@ class Server {
         this.app.use(this.apiPaths.cliDocs, cliDocsRoutes);
         this.app.use(this.apiPaths.empresa, empresaRoutes);
         this.app.use(this.apiPaths.perfilesUsuario, usuarioPerfilesRoutes);
+        this.app.use(this.apiPaths.actividades, actividadesRoutes);
+        this.app.use(this.apiPaths.agendaActividad, agendaActividadRoutes);
+        this.app.use(this.apiPaths.comentariosAgenda, comentariosAgendaRoutes);
+        this.app.use(this.apiPaths.entidades, entidadesRoutes);
     }
 
     middlewares() {

@@ -21,6 +21,16 @@ export const getClientes = async (req: Request, res: Response) => {
                             ven_maegrupo.GRU_CODIGO = ven_maecliente.GRU_CODIGO
                     )`),
                     'GrupoCliente'
+                ],
+                [
+                    // Note the wrapping parentheses in the call below!
+                    literal(`(
+                        SELECT TIP_NOMBRE
+                        FROM ven_maetipocliente AS ven_maetipocliente
+                        WHERE
+                            ven_maetipocliente.TIP_CODIGO = ven_maecliente.CLI_TIPOCLIENTE
+                    )`),
+                    'TipoCliente'
                 ]
             ]
         },
@@ -68,6 +78,16 @@ export const getClientesPorNombre = async (req: Request, res: Response) => {
                             ven_maegrupo.GRU_CODIGO = ven_maecliente.GRU_CODIGO
                     )`),
                     'GrupoCliente'
+                ],
+                [
+                    // Note the wrapping parentheses in the call below!
+                    literal(`(
+                        SELECT TIP_NOMBRE
+                        FROM ven_maetipocliente AS ven_maetipocliente
+                        WHERE
+                            ven_maetipocliente.TIP_CODIGO = ven_maecliente.CLI_TIPOCLIENTE
+                    )`),
+                    'TipoCliente'
                 ]
             ]
         },

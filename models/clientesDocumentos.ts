@@ -13,6 +13,8 @@ const ClientesDocumentos = db.define('ven_maedocumentoscliente',
         DOC_FECHA: { type: DataTypes.STRING, allowNull: false, },
         DOC_TOTAL: { type: DataTypes.FLOAT, allowNull: true, defaultValue: null, },
         DOC_ESTADO: { type: DataTypes.STRING(1), allowNull: true, defaultValue: null, },
+        DOC_ORIGEN: { type: DataTypes.STRING(3), allowNull: true, defaultValue: null, },
+        DOC_IDORIGEN: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null, },
     },
     {
         timestamps: false,
