@@ -46,6 +46,8 @@ export const postActividad = async (req: Request, res: Response) => {
             });
         }
 
+        body.editable ='1'; // Permite editar las actividades creadas manualmente
+
         const acti = await Actividad.create(body);
         await acti.save();
         res.json(acti);

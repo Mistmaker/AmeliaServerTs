@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAgendaActividades, getAgendaActividad, postAgendaActividad, putAgendaActividad, deleteAgendaActividad, generarAgenda, getActividadesGeneradas, getEstadoActividades, getAgendaActividadCliente } from '../controllers/agendaActividades.controller';
+import { getAgendaActividades, getAgendaActividad, postAgendaActividad, putAgendaActividad, deleteAgendaActividad, generarAgenda, getActividadesGeneradas, getEstadoActividades, getAgendaActividadCliente, deleteAgendaActividadCliente } from '../controllers/agendaActividades.controller';
 
 const router = Router();
 
@@ -12,5 +12,6 @@ router.post('/', postAgendaActividad);
 router.post('/periodo', generarAgenda);
 router.put('/:id', putAgendaActividad);
 router.delete('/:id', deleteAgendaActividad);
+router.post('/actividadesCliente/:id', deleteAgendaActividadCliente);
 
 export default router;

@@ -13,6 +13,7 @@ const AgendaActividad = db.define('agenda_actividad', {
     fecha_aviso: { type: DataTypes.DATE, allowNull: true, defaultValue: null, },
     usuario: { type: DataTypes.STRING(45), allowNull: true, defaultValue: null, },
     periodo: { type: DataTypes.STRING(45), allowNull: true, defaultValue: null, },
+    periodo_calculo: { type: DataTypes.STRING(45), allowNull: true, defaultValue: null, },
 }, {
     timestamps: false,
     freezeTableName: true

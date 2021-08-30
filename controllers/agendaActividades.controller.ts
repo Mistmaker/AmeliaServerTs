@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import AgendaActividad from '../models/agendaActividad.model';
-import { col, fn, literal } from "sequelize";
+import { col, fn, literal, Op } from "sequelize";
 import ComentarioAgendaActividad from '../models/comentariosAgenda.model';
 
 export const getAgendaActividades = async (req: Request, res: Response) => {
@@ -212,6 +212,35 @@ export const deleteAgendaActividad = async (req: Request, res: Response) => {
 
         await agActividad.destroy();
         res.json(agActividad);
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Ocurrió un error, contáctese con el administrador del sistema',
+            error
+        });
+    }
+
+}
+
+export const deleteAgendaActividadCliente = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { body } = req;
+    try {
+        const result = await AgendaActividad.destroy({
+            where: {
+                ruc: id,
+                estado: 'PENDIENTE',
+                periodo: body.periodo,
+                id: {
+                    [Op.notIn]: literal(`(
+                        SELECT id_agenda
+                        FROM comentarios AS comentarios
+                        WHERE
+                            comentarios.id_agenda = agenda_actividad.id
+                    )`)
+                }
+            }
+        });
+        res.json(result);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
