@@ -27,6 +27,8 @@ import actividadesRoutes from '../routes/actividades.routes';
 import agendaActividadRoutes from '../routes/agendaActividad.routes';
 import comentariosAgendaRoutes from '../routes/comentariosAgenda.routes';
 import entidadesRoutes from '../routes/entidad.routes';
+import tipoJuridicaRoutes from '../routes/tipoJuridicaClientes.routes';
+import empresaPlacasRoutes from '../routes/empresaPlacas.routes';
 
 class Server {
 
@@ -57,6 +59,8 @@ class Server {
         agendaActividad: "/api/agendaActividad",
         comentariosAgenda: "/api/comentariosAgenda",
         entidades: "/api/entidades",
+        tipJuridica: "/api/tipJuridica",
+        empresaPlacas: "/api/empresaPlacas",
     }
 
     constructor() {
@@ -74,7 +78,7 @@ class Server {
         try {
             await db.authenticate();
             console.log('Base de datos en línea');
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error);
         }
     }
@@ -106,6 +110,8 @@ class Server {
         this.app.use(this.apiPaths.agendaActividad, agendaActividadRoutes);
         this.app.use(this.apiPaths.comentariosAgenda, comentariosAgendaRoutes);
         this.app.use(this.apiPaths.entidades, entidadesRoutes);
+        this.app.use(this.apiPaths.tipJuridica, tipoJuridicaRoutes);
+        this.app.use(this.apiPaths.empresaPlacas, empresaPlacasRoutes);
     }
 
     middlewares() {

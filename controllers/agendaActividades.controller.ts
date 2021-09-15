@@ -41,7 +41,7 @@ export const getAgendaActividades = async (req: Request, res: Response) => {
                 [
                     literal(`(select count(comentario) from comentarios where id_agenda=agenda_actividad.id)`),
                     'comentarios'
-                ],[
+                ], [
                     literal(`( month(vence) )`),
                     'mesVence'
                 ]
@@ -136,7 +136,7 @@ export const getAgendaActividadCliente = async (req: Request, res: Response) => 
                 [
                     literal(`(select count(comentario) from comentarios where id_agenda=agenda_actividad.id)`),
                     'comentarios'
-                ],[
+                ], [
                     literal(`( month(vence) )`),
                     'mesVence'
                 ]
@@ -150,18 +150,9 @@ export const postAgendaActividad = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-
-        const agActividad = await AgendaActividad.findByPk(body.id);
-
-        if (agActividad) {
-            return res.status(403).json({
-                msg: `Actividad con código ${body.id} ya está resgistada`
-            });
-        }
-
-        const agAct = await AgendaActividad.create(body);
-        await agAct.save();
-        res.json(agAct);
+        const agenda = await AgendaActividad.sequelize?.query(`call tarea_manual('${body.id_cliente}','${body.id_actividad}','${body.vencimiento}','${body.dias}');`);
+        console.log(agenda);
+        res.json(agenda);
     } catch (error) {
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
@@ -225,11 +216,13 @@ export const deleteAgendaActividadCliente = async (req: Request, res: Response) 
     const { id } = req.params;
     const { body } = req;
     try {
+        console.log(id, body);
         const result = await AgendaActividad.destroy({
             where: {
                 ruc: id,
                 estado: 'PENDIENTE',
                 periodo: body.periodo,
+                creado: body.creado,
                 id: {
                     [Op.notIn]: literal(`(
                         SELECT id_agenda
@@ -252,7 +245,7 @@ export const deleteAgendaActividadCliente = async (req: Request, res: Response) 
 
 export const generarAgenda = async (req: Request, res: Response) => {
     const { body } = req;
-    const agenda = await AgendaActividad.sequelize?.query(`call generar_agenda('${body.id}','${body.periodo}','${body.fecha}');`);
+    const agenda = await AgendaActividad.sequelize!.query(`call generar_agenda('${body.id}','${body.periodo}','${body.fecha}');`);
     console.log(agenda);
     res.json(agenda);
 }

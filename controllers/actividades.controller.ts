@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { literal } from "sequelize";
+import { Op, literal } from "sequelize";
 import Actividad from '../models/actividades.model';
 import AgendaActividad from '../models/agendaActividad.model';
 
@@ -20,6 +20,21 @@ export const getActividades = async (req: Request, res: Response) => {
                     'nombreEntidad'
                 ]
             ]
+        }
+    });
+    res.json(actividades);
+}
+
+export const getActividadesPorNombre = async (req: Request, res: Response) => {
+
+    const { body } = req;
+
+    const actividades = await Actividad.findAll({
+        // limit: 2
+        where: {
+            actividad: {
+                [Op.like]: '%' + body.nombre + '%'
+            }
         }
     });
     res.json(actividades);
@@ -46,7 +61,7 @@ export const postActividad = async (req: Request, res: Response) => {
             });
         }
 
-        body.editable ='1'; // Permite editar las actividades creadas manualmente
+        body.editable = '1'; // Permite editar las actividades creadas manualmente
 
         const acti = await Actividad.create(body);
         await acti.save();

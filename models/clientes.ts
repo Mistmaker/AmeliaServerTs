@@ -126,7 +126,14 @@ const Cliente = db.define('ven_maecliente', {
     CLI_CONTRIESPECIAL: { type: DataTypes.STRING(80), allowNull: true, defaultValue: null, },
     CLI_EMPRESAFANTAS: { type: DataTypes.STRING(80), allowNull: true, defaultValue: null, },
     CLI_AGENRETENCION: { type: DataTypes.STRING(80), allowNull: true, defaultValue: null, },
-    CLI_TIPOCLIENTE: {type: DataTypes.INTEGER, allowNull: false, }, 
+    CLI_TIPOCLIENTE: { type: DataTypes.INTEGER, allowNull: false, },
+    CLI_NUMEROAFILIADOS: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+    CLI_TIPOJURIDICA: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
+    CLI_SUPERAMONTOACTIVOS_DEC_PATR: { type: DataTypes.STRING(1), allowNull: true, defaultValue: null },
+    CLI_AFILIADOIESS: { type: DataTypes.STRING(1), allowNull: true, defaultValue: null },
+    CLI_REGIMENRUC: { type: DataTypes.STRING(15), allowNull: true, defaultValue: null },
+    CLI_INMUEBLE_REG_MUNI: { type: DataTypes.STRING(1), allowNull: true, defaultValue: null },
+    CLI_CONTRATARAUDITORIASUPER: { type: DataTypes.STRING(1), allowNull: true, defaultValue: null },
 }, {
     timestamps: false,
     freezeTableName: true
