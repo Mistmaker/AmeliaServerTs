@@ -47,7 +47,6 @@ export const getProveedoresByName = async (req: Request, res: Response) => {
 
 export const postProveedores = async (req: Request, res: Response) => {
   const { body } = req;
-  console.log('POST BODY PROVEEDOR', body);
 
   const fixedBody = { COM_CODIGO: '01', PRO_RUCIDE: body.PRO_CODIGO, ...body };
 
@@ -63,7 +62,6 @@ export const postProveedores = async (req: Request, res: Response) => {
     await supplier.save();
     res.json(supplier);
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       msg: 'Ocurrió un error inesperado, comuníquese con el administrador del sitio',
       error,
@@ -74,8 +72,6 @@ export const postProveedores = async (req: Request, res: Response) => {
 export const putProveedores = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { body } = req;
-
-  console.log('PUT BODY PROVEEDOR', body);
 
   const fixedBody = {
     COM_CODIGO: '01',

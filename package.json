@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "cors": "^2.8.5",
+        "dayjs": "^1.10.7",
         "dotenv": "^8.5.1",
         "express": "^4.17.1",
         "express-fileupload": "^1.2.1",

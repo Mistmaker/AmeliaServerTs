@@ -12,7 +12,6 @@ export const getFactura = async (req: Request, res: Response) => {};
 
 export const postFacturaProveedor = async (req: Request, res: Response) => {
   const { body } = req;
-  console.log('body', body);
 
   if (!body.isNewSupplier) {
     // first we verify if the user exists
@@ -26,7 +25,6 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
 
   // then we verify if invoice number exists
   const invoice = await EncabezadoFactura.findByPk(body.ENCFACPRO_NUMERO);
-  console.log('factura', invoice);
   if (invoice) {
     return res.status(404).json({
       msg: `Ya existe una factura con el número ${body.ENCFACPRO_NUMERO}`,
@@ -43,7 +41,6 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
         PRO_RUCIDE: body.supplier.PRO_CODIGO,
         ...body.supplier,
       };
-      console.log('supplier', fixedSupplier);
       await Proveedor.create(fixedSupplier, { transaction: t });
     }
 
@@ -56,7 +53,6 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
         (item.DETFACPRO_LINEA = index+1)
       ),
     );
-    console.log('details', details);
 
     const invoice = await EncabezadoFactura.create(body, { transaction: t });
 
@@ -70,8 +66,6 @@ export const postFacturaProveedor = async (req: Request, res: Response) => {
   } catch (error) {
     // rollback the transaction on error
     await t.rollback();
-
-    console.log('error', error);
 
     res.status(500).json({
       msg: 'Ocurrió un error, contáctese con el administrador del sistema',

@@ -22,8 +22,6 @@ export const getEmpresaPlaca = async (req: Request, res: Response) => {
 export const postEmpresaPlaca = async (req: Request, res: Response) => {
   const { body } = req;
 
-  console.log(body);
-
   try {
     const placa = await EmpresaPlaca.findOne({
       where: {

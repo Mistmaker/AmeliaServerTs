@@ -37,8 +37,6 @@ export const getVendedorByNombre = async (req: Request, res: Response) => {
 export const postVendedor = async (req: Request, res: Response) => {
   const { body } = req;
 
-  console.log(body);
-
   try {
     const vendedor = await Vendedor.findByPk(body.VEN_CODIGO);
 

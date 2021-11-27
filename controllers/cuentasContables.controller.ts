@@ -28,8 +28,6 @@ export const getCuenta = async (req: Request, res: Response) => {
 export const getCuentasByNombreOrCode = async (req: Request, res: Response) => {
   const { body } = req;
 
-  console.log(body);
-  
   const cuentas = await CuentaContable.findAll({
     where: {
       [Op.not]: [

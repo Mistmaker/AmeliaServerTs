@@ -22,11 +22,11 @@ export const postPerfil = async (req: Request, res: Response) => {
 
     try {
 
-        const perfil = await UsuarioPerfiles.findByPk(body.USUIDENTIFICACION);
+        const perfil = await UsuarioPerfiles.findByPk(body.PERFIL_CODIGO);
 
         if (perfil) {
             return res.status(403).json({
-                msg: `Perfil con código ${body.USUIDENTIFICACION} ya está resgistado`
+                msg: `Perfil con código ${body.PERFIL_CODIGO} ya está resgistado`
             });
         }
 
@@ -34,6 +34,7 @@ export const postPerfil = async (req: Request, res: Response) => {
         await perf.save();
         res.json(perf);
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             msg: 'Ocurrió un error, contáctese con el administrador del sistema',
             error

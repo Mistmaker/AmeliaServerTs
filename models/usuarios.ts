@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
-const Usuario = db.define('seg_maeusuario', {
+const Usuario = db.define<any>('seg_maeusuario', {
     USUIDENTIFICACION: { type: DataTypes.STRING(10), primaryKey: true, allowNull: false, },
     USUCLAVE: { type: DataTypes.STRING(10), allowNull: false, },
     USURUCI: { type: DataTypes.STRING(14), allowNull: false, },

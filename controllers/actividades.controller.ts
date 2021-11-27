@@ -7,6 +7,9 @@ export const getActividades = async (req: Request, res: Response) => {
 
     const actividades = await Actividad.findAll({
         // limit: 2
+        where: {
+            // id_padre: null
+        },
         attributes: {
             include: [
                 [

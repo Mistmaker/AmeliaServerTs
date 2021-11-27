@@ -72,8 +72,6 @@ export const getCiudad = async (req: Request, res: Response) => {
 export const postCiudad = async (req: Request, res: Response) => {
   const { body } = req;
 
-  console.log(body);
-
   try {
     const ciudad = await Ciudad.findOne({
       where: {
@@ -103,10 +101,6 @@ export const postCiudad = async (req: Request, res: Response) => {
 export const putCiudad = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { body } = req;
-  console.log('PUUUUUT');
-
-  console.log(id);
-  console.log(body);
 
   try {
     const ciudadUpdated = await Ciudad.findOne({
@@ -130,7 +124,6 @@ export const putCiudad = async (req: Request, res: Response) => {
 
     res.json(ciudadUpdated);
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       msg: 'Ocurrió un error, contáctese con el administrador del sistema',
       error,

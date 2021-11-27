@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import { Request, Response } from 'express';
 import Empresa from '../models/empresa';
+import EmpresaPlaca from '../models/empresaPlacas';
 
 export const getDatosEmpresa = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -33,6 +34,12 @@ export const putDatosEmpresa = async (req: Request, res: Response) => {
     }
 
     await tipo.update(body);
+
+    if (body.PLACAS){
+      await EmpresaPlaca.truncate();
+      await EmpresaPlaca.bulkCreate(body.PLACAS);
+    }
+
     res.json(tipo);
   } catch (error) {
     res.status(500).json({

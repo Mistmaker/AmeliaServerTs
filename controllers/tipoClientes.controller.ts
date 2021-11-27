@@ -22,8 +22,6 @@ export const getTipoCliente = async (req: Request, res: Response) => {
 export const postTipoCliente = async (req: Request, res: Response) => {
   const { body } = req;
 
-  console.log(body);
-
   try {
     const tipo = await TipoClientes.findOne({
       where: {

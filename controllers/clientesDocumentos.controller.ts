@@ -68,7 +68,6 @@ export const getDocumento = async (req: Request, res: Response) => {
 
     readStream.pipe(res);
   }).catch(err => {
-    console.log(err)
     res.json({ msg: 'Error', detail: err });
   });
 };
@@ -89,11 +88,6 @@ export const getImagen = async (req: Request, res: Response) => {
 
 export const postDocumento = async (req: any, res: Response) => {
 
-  // console.log(req.body.idCli);
-
-  console.log('in=>', req.files);
-  console.log('len=>', req.files.current.length);
-
   if (req.files?.current == undefined || req.files?.current == null) {
     return res.status(400).send(`You must upload a file.`);
   }
@@ -101,7 +95,6 @@ export const postDocumento = async (req: any, res: Response) => {
   if (req.files.current.length) {
 
     for (const file of req.files.current) {
-      console.log('for', file);
       const data = {
         DOC_CODIGO: 0,
         CLI_CODIGO: req.body.idCli,
@@ -112,7 +105,6 @@ export const postDocumento = async (req: any, res: Response) => {
         DOC_MIMETYPE: file.mimetype,
         DOC_FECHA: req.body.fecha
       }
-      // console.log('arr', data);
       //Valid Size
       if ((data.DOC_SIZE) / (1024) > 15) res.status(400).send('The file size must be less than 15 mb')
       try {
@@ -162,11 +154,6 @@ export const postDocumento = async (req: any, res: Response) => {
 
 export const postImagen = async (req: any, res: Response) => {
 
-  // console.log(req.body.idCli);
-
-  console.log('in=>', req.files);
-  console.log('len=>', req.files.current.length);
-
   if (req.files?.current == undefined || req.files?.current == null) {
     return res.status(400).send(`You must upload a file.`);
   }
@@ -174,7 +161,6 @@ export const postImagen = async (req: any, res: Response) => {
   if (req.files.current.length) {
 
     for (const file of req.files.current) {
-      console.log('for', file);
       const data = {
         DOC_CODIGO: 0,
         CLI_CODIGO: req.body.idCli,
@@ -187,7 +173,6 @@ export const postImagen = async (req: any, res: Response) => {
         DOC_TOTAL: req.body.total,
         DOC_ESTADO: req.body.estado
       }
-      // console.log('arr', data);
       //Valid Size
       if ((data.DOC_SIZE) / (1024) > 15) res.status(400).send('The file size must be less than 15 mb')
       try {
@@ -229,7 +214,6 @@ export const postImagen = async (req: any, res: Response) => {
       }
 
       res.json({ file: `public/${req.body.filename}.jpg` });
-      console.log(res.json);
     });
 
     try {
@@ -237,7 +221,6 @@ export const postImagen = async (req: any, res: Response) => {
       await documento.save();
       res.json(documento);
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         msg: 'Ocurrió un error, contáctese con el administrador del sistema',
         error,

@@ -1,7 +1,7 @@
 import { DataTypes, Op } from 'sequelize';
 import db from '../db/connection';
 
-const Cliente = db.define('ven_maecliente', {
+const Cliente = db.define<any>('ven_maecliente', {
     CLI_CODIGO: { type: DataTypes.STRING(20), primaryKey: true, allowNull: false, },
     GRU_CODIGO: { type: DataTypes.STRING(5), allowNull: true, defaultValue: null, },
     VEN_CODIGO: { type: DataTypes.STRING(5), allowNull: true, defaultValue: null, },
@@ -126,7 +126,7 @@ const Cliente = db.define('ven_maecliente', {
     CLI_CONTRIESPECIAL: { type: DataTypes.STRING(80), allowNull: true, defaultValue: null, },
     CLI_EMPRESAFANTAS: { type: DataTypes.STRING(80), allowNull: true, defaultValue: null, },
     CLI_AGENRETENCION: { type: DataTypes.STRING(80), allowNull: true, defaultValue: null, },
-    CLI_TIPOCLIENTE: { type: DataTypes.INTEGER, allowNull: false, },
+    CLI_TIPOCLIENTE: { type: DataTypes.INTEGER, allowNull: true, },
     CLI_NUMEROAFILIADOS: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
     CLI_TIPOJURIDICA: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
     CLI_SUPERAMONTOACTIVOS_DEC_PATR: { type: DataTypes.STRING(1), allowNull: true, defaultValue: null },

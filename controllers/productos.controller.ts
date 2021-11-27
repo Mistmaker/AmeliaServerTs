@@ -63,7 +63,6 @@ export const postProducto = async (req: Request, res: Response) => {
         (value.ART_CODIGO = body.ART_CODIGO), (value.COM_CODIGO = '01')
       ),
     );
-    console.log('precios', precios);
 
     const producto = await Producto.create(body, { transaction: t });
     await Precio.bulkCreate(precios, { validate: true, transaction: t });
@@ -78,8 +77,6 @@ export const postProducto = async (req: Request, res: Response) => {
     // rollback the transaction on error
     await t.rollback();
 
-    console.log('error', error);
-    
     res.status(500).json({
       msg: 'Ocurrió un error, contáctese con el administrador del sistema',
       error,
@@ -90,7 +87,6 @@ export const postProducto = async (req: Request, res: Response) => {
 export const putProducto = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { body } = req;
-  console.log('body', body);
 
   // instanced the transaction
   const t = await db.transaction();

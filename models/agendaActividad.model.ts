@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
-const AgendaActividad = db.define('agenda_actividad', {
+const AgendaActividad = db.define<any>('agenda_actividad', {
     id: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false, },
     ruc: { type: DataTypes.STRING(20), allowNull: true, defaultValue: null, },
     id_actividad: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null, },

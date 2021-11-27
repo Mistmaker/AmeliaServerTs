@@ -34,8 +34,6 @@ export const getTipoJuridicaCliente = async (req: Request, res: Response) => {
 export const postTipoJuridicaCliente = async (req: Request, res: Response) => {
   const { body } = req;
 
-  console.log(body);
-
   try {
     const tipo = await TipoJuridicaCliente.findOne({
       where: {
