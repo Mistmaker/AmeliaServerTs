@@ -430,7 +430,7 @@ export const generarAgendaClientes = async (req: Request, res: Response) => {
                 if (cliente.CLI_TIPOCLIENTE == 3) { tmpActividad = actividades.filter(a => a.pj_con_fin_lucro == 1) }
                 if (cliente.CLI_TIPOCLIENTE == 4) { tmpActividad = actividades.filter(a => a.pj_sin_fin_lucro == 1) }
 
-                if (1 == 1) { perNatural = false } else { perNatural = true }
+                if (cliente.CLI_TIPOCLIENTE == 1 || cliente.CLI_TIPOCLIENTE == 2) { perNatural = true } else { perNatural = false }
 
                 // cargando mensuales
                 tmpActM = tmpActividad.filter(a => a.frecuencia == 'Mensual');
@@ -560,8 +560,14 @@ export const generarAgendaClientes = async (req: Request, res: Response) => {
                     const mesEntrega1 = mesP1.toString().length < 2 ? `0${mesP1}` : mesP1;
                     const mesEntrega2 = mesP2.toString().length < 2 ? `0${mesP2}` : mesP2;
 
-                    await agregarTarea(tareasIngresar, cliente.CLI_CODIGO, act, mesEntrega1, periodo, diavence, date, `${mesEntrega1}-${diavence}-${date.getFullYear()}`, fecha);
-                    await agregarTarea(tareasIngresar, cliente.CLI_CODIGO, act, mesEntrega2, periodo, diavence, date, `${mesEntrega2}-${diavence}-${date.getFullYear()}`, fecha);
+                    if (act.condicion == '') {
+                        await agregarTarea(tareasIngresar, cliente.CLI_CODIGO, act, mesEntrega1, periodo, diavence, date, `${mesEntrega1}-${diavence}-${date.getFullYear()}`, fecha);
+                        await agregarTarea(tareasIngresar, cliente.CLI_CODIGO, act, mesEntrega2, periodo, diavence, date, `${mesEntrega2}-${diavence}-${date.getFullYear()}`, fecha);
+                    }
+                    if (act.condicion == 'microempresas' && cliente.CLI_MICROEMPRESA != 'NO') {
+                        await agregarTarea(tareasIngresar, cliente.CLI_CODIGO, act, mesEntrega1, periodo, diavence, date, `${mesEntrega1}-${diavence}-${date.getFullYear()}`, fecha);
+                        await agregarTarea(tareasIngresar, cliente.CLI_CODIGO, act, mesEntrega2, periodo, diavence, date, `${mesEntrega2}-${diavence}-${date.getFullYear()}`, fecha);
+                    }
 
 
                 }

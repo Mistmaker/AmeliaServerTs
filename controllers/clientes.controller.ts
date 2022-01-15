@@ -19,7 +19,7 @@ export const getClientes = async (req: Request, res: Response) => {
 
     if (perfil["PERFIL_CLIENTES"] == 'T') {
         clientes = await Cliente.findAll({
-            limit: 100,
+            limit: 1000,
             attributes: {
                 include: [
                     [
@@ -53,6 +53,16 @@ export const getClientes = async (req: Request, res: Response) => {
                             ven_maevendedor.VEN_CODIGO = ven_maecliente.VEN_CODIGO
                     )`),
                         'Asesor'
+                    ],
+                    [
+                        // Note the wrapping parentheses in the call below!
+                        literal(`(
+                        SELECT VEN_CODIGO
+                        FROM ven_maevendedor AS ven_maevendedor
+                        WHERE
+                            ven_maevendedor.VEN_CODIGO = ven_maecliente.VEN_CODIGO
+                    )`),
+                        'CodigoAsesor'
                     ]
                 ]
             },
