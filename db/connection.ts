@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const db = new Sequelize('amelia','soporte', 'soporte', {
+const db = new Sequelize('amelia_vacia','soporte', 'soporte', {
     host: '186.4.146.196',
     dialect: 'mysql',
     port: 6363,

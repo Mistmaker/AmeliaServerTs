@@ -615,7 +615,7 @@ export const getDocumentos = async (req: any, res: Response) => {
         where: {
             id_agenda: id
         },
-        attributes: ['ADOC_CODIGO', 'id_agenda', 'id_usuario', 'ADOC_NOMBRE', 'ADOC_SIZE', 'ADOC_TIPO', 'ADOC_FECHA']
+        attributes: ['ADOC_CODIGO', 'id_agenda', 'id_usuario', 'ADOC_NOMBRE', 'ADOC_SIZE', 'ADOC_TIPO', 'ADOC_FECHA', 'ADOC_COMENTARIO']
     });
     res.status(200).json(documentos);
 }
@@ -630,6 +630,7 @@ export const postDocumento = async (req: any, res: Response) => {
         return res.status(400).send(`You must upload a file.`);
     }
 
+    console.log(req.body)
     // if (req.files.current.length > 0) {
     const data = {
         ADOC_CODIGO: 0,
@@ -641,6 +642,7 @@ export const postDocumento = async (req: any, res: Response) => {
         ADOC_TIPO: req.files.current.name.split('.').pop(),
         ADOC_MIMETYPE: req.files.current.mimetype,
         ADOC_FECHA: req.body.fecha,
+        ADOC_COMENTARIO: req.body.comentarioArchivo,
     }
     //Valid Size
     if ((data.ADOC_SIZE) / (1024) > 15) res.status(400).send('The file size must be less than 15 mb')
@@ -739,10 +741,10 @@ const agregarTarea = async (tareas: AgendaActividadModel[], ruc: string, act: Ac
         peridoCalculoMensual = peridoCalculoMensual.subtract(1, 'month');
         peridoCalculo = `${peridoCalculoMensual.get('year')}-${(peridoCalculoMensual.get('month') + 1).toString().length < 2 ? `0${peridoCalculoMensual.get('month') + 1}` : (peridoCalculoMensual.get('month') + 1).toString()}`;
     }
-    if (act.frecuencia == 'Semestral') {
+    else if (act.frecuencia == 'Semestral') {
         peridoCalculo = mes == '07' ? `Segundo Periodo ${periodo - 1}` : `Primer Periodo ${periodo}`;
     }
-    if (+act.frecuencia > 0) {
+    else if (+act.frecuencia > 0) {
         peridoCalculo = `${periodo - 1}`;
     }
 

@@ -12,6 +12,7 @@ const AgendaActividadDocumentos = db.define('agenda_actividad_documentos',
         ADOC_TIPO: { type: DataTypes.STRING(100), allowNull: false, },
         ADOC_MIMETYPE: { type: DataTypes.STRING(100), allowNull: false, },
         ADOC_FECHA: { type: DataTypes.DATE, allowNull: false, },
+        ADOC_COMENTARIO: { type: DataTypes.STRING(1000), allowNull: true, },
     },
     {
         timestamps: false,
